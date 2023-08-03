@@ -1,4 +1,4 @@
-const { User, Book } = require('../models');
+const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -6,12 +6,13 @@ const resolvers = {
     me: async (parent, args, context) => {
       if(context.user) {
         const userData = await User.findOne({
-          _id: context.user._id}).select()
-        }
+          _id: context.user._id});
         return userData;
-      }
-      throw AuthenticationError;
+        }
+        throw AuthenticationError;
+      } 
   },
+  
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
       const userData = await User.create({
